@@ -3,26 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Nuevo Turno - Barbería</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Turnos - Barber Manager</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 50px auto;
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
-            background-color: #f4f4f4;
         }
 
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .form-group {
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
-            margin-top: 15px;
+            margin-bottom: 5px;
             font-weight: bold;
         }
 
@@ -30,52 +27,124 @@
         select {
             width: 100%;
             padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
             box-sizing: border-box;
         }
 
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
             background-color: #2c3e50;
             color: white;
+            padding: 10px 15px;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
             width: 100%;
+            font-size: 16px;
         }
 
         button:hover {
             background-color: #34495e;
         }
+
+        /* Panel de Errores (Punto 6 del Checklist) */
+        #panel-errores {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        /* Estilos de la Tabla (Punto 3 del Checklist) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Reserva de Turno</h1>
-    <form method="POST" action="/Barber_Manager/turnos">
-        <label>Nombre:
-            <input type="text" name="clienteNombre" required>
-        </label>
 
-        <label>Teléfono:
-            <input type="text" name="clienteTelefono" required>
-        </label>
+    <h1>Reservar Nuevo Turno</h1>
 
-        <label>Barbero:
-            <select name="barberoId" required>
-                <option value="1">Maximo Pérez</option>
-                <option value="2">Marcos López</option>
+    <div id="panel-errores">
+        <strong>Por favor, corrija los siguientes errores:</strong>
+        <ul id="lista-errores"></ul>
+    </div>
+
+    <form id="form-turno">
+        <div class="form-group">
+            <label for="clienteNombre">Nombre del Cliente:</label>
+            <input type="text" id="clienteNombre" name="clienteNombre" required placeholder="Ej: Juan Pérez">
+        </div>
+
+        <div class="form-group">
+            <label for="clienteTelefono">Teléfono (8-10 dígitos):</label>
+            <input type="tel" id="clienteTelefono" name="clienteTelefono" required placeholder="Ej: 1122334455">
+        </div>
+
+        <div class="form-group">
+            <label for="barberoId">Barbero:</label>
+            <select id="barberoId" name="barberoId" required>
+                <option value="">Seleccione un barbero...</option>
+                <option value="1">Maximo (Cortes clásicos)</option>
+                <option value="2">Elias (Barba y Estilo)</option>
             </select>
-        </label>
+        </div>
 
-        <input type="date" name="fecha" required>
-        <input type="time" name="hora" required>
+        <div class="form-group">
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" required>
+        </div>
+
+        <div class="form-group">
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" name="hora" required>
+        </div>
+
+        <div class="form-group">
+            <label for="servicio">Servicio (Opcional):</label>
+            <input type="text" id="servicio" name="servicio" placeholder="Ej: Corte y Barba">
+        </div>
 
         <button type="submit">Reservar Turno</button>
     </form>
+
+    <hr style="margin-top: 40px;">
+
+    <h2>Próximos Turnos Agendados</h2>
+    <table id="tabla-turnos">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Teléfono</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Servicio</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpo-tabla">
+        </tbody>
+    </table>
+
+    <script src="/Barber_Manager/public/js/app.js"></script>
+
 </body>
 
 </html>

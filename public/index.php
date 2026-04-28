@@ -7,9 +7,11 @@ require_once __DIR__ . '/../vendor/autoload.php';      // Autoload de Composer (
 require_once __DIR__ . '/../config/autoload.php';      // Autoload de clases App\*
 require_once __DIR__ . '/../config/database.php';      // Conexión a la DB
 require_once __DIR__ . '/../models/Turno.php';         // Modelo de la tabla turnos
+require_once __DIR__ . '/../models/Barbero.php';       // Modelo de la tabla barberos
 
 // Importar controladores
 use App\Controllers\TurnoController;
+use App\Controllers\BarberoController;
 
 
 // --- ROUTER ---
@@ -20,13 +22,27 @@ $proyecto_path = '/Barber_Manager';
 $path = str_replace($proyecto_path, '', $requestUri);
 $path = parse_url($path, PHP_URL_PATH);
 
-// RUTA: Formulario de alta (GET /turnos/nuevo)
+// ============================================
+// RUTAS DE BIENVENIDA
+// ============================================
+
+// RUTA: Página de inicio (GET /)
+if ($method === 'GET' && ($path === '/' || $path === '')) {
+    BarberoController::bienvenida();
+    exit;
+}
+
+// ============================================
+// RUTAS DE TURNOS
+// ============================================
+
+// RUTA: Formulario de nuevo turno (GET /turnos/nuevo)
 if ($method === 'GET' && $path === '/turnos/nuevo') {
     TurnoController::nuevo();
     exit;
 }
 
-// RUTA: Procesar alta (POST /turnos)
+// RUTA: Crear turno (POST /turnos)
 if ($method === 'POST' && $path === '/turnos') {
     TurnoController::crear();
     exit;
@@ -35,6 +51,28 @@ if ($method === 'POST' && $path === '/turnos') {
 // RUTA: Listar turnos (GET /turnos)
 if ($method === 'GET' && $path === '/turnos') {
     TurnoController::listar();
+    exit;
+}
+
+// ============================================
+// RUTAS DE BARBEROS
+// ============================================
+
+// RUTA: Formulario de registro (GET /barberos/registro)
+if ($method === 'GET' && $path === '/barberos/registro') {
+    BarberoController::formularioRegistro();
+    exit;
+}
+
+// RUTA: Registrar barbero (POST /barberos)
+if ($method === 'POST' && $path === '/barberos') {
+    BarberoController::registrar();
+    exit;
+}
+
+// RUTA: Listar barberos (GET /barberos)
+if ($method === 'GET' && $path === '/barberos') {
+    BarberoController::listar();
     exit;
 }
 

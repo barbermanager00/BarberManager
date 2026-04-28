@@ -1,0 +1,32 @@
+# Dependencias de Composer (MUY IMPORTANTE)
+vendor/
+composer.lock
+
+# Configuraciones locales (no debe ir al repo)
+.env
+.env.local
+config/database.php
+
+# IDE y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Caché
+.cache/
+*.tmp
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
+
+# Archivos temporales
+tmp/
+temp/

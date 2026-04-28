@@ -1,0 +1,5 @@
+Hecho: Router manual funcionando con estructura profesional (/public). La ruta /health responde un JSON válido y el archivo .htaccess redirige correctamente el tráfico al punto de entrada único.
+
+Falta: Agregar más rutas dinámicas (como /servicios o /turnos) y empezar a separar las funciones de respuesta en archivos controladores independientes para no saturar el index.php.
+
+Bloqueo: Me costó entender inicialmente la relación entre el .htaccess en la raíz y por qué el index.php debía estar en una carpeta public. También fue un reto ajustar la limpieza de la URI ($proyecto_path) para que coincidiera con la carpeta de XAMPP.

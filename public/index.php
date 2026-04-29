@@ -19,8 +19,19 @@ use App\Controllers\BarberoController;
 $method = $_SERVER['REQUEST_METHOD'];
 $requestUri = $_SERVER['REQUEST_URI'];
 $proyecto_path = '/Barber_Manager';
+
+// Limpiar la ruta
 $path = str_replace($proyecto_path, '', $requestUri);
 $path = parse_url($path, PHP_URL_PATH);
+
+// Limpiar /public/ de la ruta si está ahí
+$path = str_replace('/public/', '/', $path);
+
+// Normalizar la ruta (eliminar barras múltiples)
+$path = '/' . trim($path, '/');
+if ($path !== '/') {
+    $path = rtrim($path, '/');
+}
 
 // ============================================
 // RUTAS DE BIENVENIDA

@@ -1,13 +1,17 @@
-RewriteEngine On
-RewriteBase /Barber_Manager/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /Barber_Manager/
 
-# Si entran a la base del proyecto, redirigir a /public/
-RewriteRule ^$ public/ [L,R=302]
+    # Si la petición es a un archivo o carpeta real, no hacer nada
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
 
-# Si ya está dentro de public, no seguir reescribiendo
-RewriteRule ^public/ - [L]
-
-# Si no es archivo ni carpeta real, enviar todo a public/index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$ public/index.php [QSA,L]
+    # Si no está en /public, redirigir internamente a /public/index.php
+    RewriteCond %{REQUEST_URI} !^/Barber_Manager/public/
+    RewriteRule ^(.*)$ public/index.php [QSA,L]
+    
+    # Si está en /public, ejecutar index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^public/(.*)$ public/index.php [QSA,L]
+</IfModule>

@@ -21,7 +21,7 @@ async function cargarBarberos() {
 
         const text = await response.text();
         console.log('Texto crudo recibido:', text);
-        
+
         const barberos = JSON.parse(text);
         console.log('Barberos parseados:', barberos);
 

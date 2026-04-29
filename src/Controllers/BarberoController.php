@@ -82,7 +82,20 @@ class BarberoController
     public static function listar()
     {
         header('Content-Type: application/json');
-        $barberos = Barbero::where('estado', true)->get();
-        echo json_encode($barberos, JSON_UNESCAPED_UNICODE);
+        
+        try {
+            $barberos = Barbero::where('estado', true)
+                ->select('id', 'nombre', 'especialidad', 'telefono')
+                ->orderBy('nombre')
+                ->get();
+            
+            echo json_encode($barberos, JSON_UNESCAPED_UNICODE);
+        } catch (\Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                "ok" => false,
+                "error" => "Error al obtener barberos: " . $e->getMessage()
+            ]);
+        }
     }
 }

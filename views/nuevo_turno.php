@@ -102,9 +102,7 @@
         <div class="form-group">
             <label for="barberoId">Barbero:</label>
             <select id="barberoId" name="barberoId" required>
-                <option value="">Seleccione un barbero...</option>
-                <option value="1">Maximo (Cortes clásicos)</option>
-                <option value="2">Elias (Barba y Estilo)</option>
+                <option value="">Cargando barberos...</option>
             </select>
         </div>
 
@@ -134,6 +132,7 @@
             <tr>
                 <th>Cliente</th>
                 <th>Teléfono</th>
+                <th>Barbero</th>
                 <th>Fecha</th>
                 <th>Hora</th>
                 <th>Servicio</th>
@@ -143,7 +142,7 @@
         </tbody>
     </table>
 
-    <script src="/Barber_Manager/public/js/app.js"></script>
+    <script src="/Barber_Manager/js/app.js"></script>
 
 </body>
 

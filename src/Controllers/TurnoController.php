@@ -63,7 +63,22 @@ class TurnoController
     public static function listar()
     {
         header('Content-Type: application/json');
-        $turnos = Turno::all(); // Trae todos los turnos de la DB
-        echo json_encode($turnos, JSON_UNESCAPED_UNICODE);
+        $turnos = Turno::with('barbero')->orderBy('fecha', 'desc')->get();
+        
+        // Transformar los datos para incluir el nombre del barbero
+        $turnosConBarbero = $turnos->map(function($turno) {
+            return [
+                'id' => $turno->id,
+                'clienteNombre' => $turno->clienteNombre,
+                'clienteTelefono' => $turno->clienteTelefono,
+                'barberoId' => $turno->barberoId,
+                'nombreBarbero' => $turno->barbero ? $turno->barbero->nombre : 'Barbero no asignado',
+                'fecha' => $turno->fecha,
+                'hora' => $turno->hora,
+                'servicio' => $turno->servicio
+            ];
+        });
+        
+        echo json_encode($turnosConBarbero, JSON_UNESCAPED_UNICODE);
     }
 }

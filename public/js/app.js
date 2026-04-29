@@ -1,6 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM cargado, iniciando carga de barberos...');
+    cargarBarberos();
     cargarTurnos();
 });
+
+// Cargar barberos dinámicamente en el select
+async function cargarBarberos() {
+    const selectBarberos = document.getElementById('barberoId');
+    console.log('Iniciando carga de barberos...');
+
+    try {
+        console.log('Haciendo fetch a /Barber_Manager/barberos');
+        const response = await fetch('/Barber_Manager/barberos');
+
+        console.log('Respuesta recibida:', response.status);
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: No se pudo obtener los barberos`);
+        }
+
+        const text = await response.text();
+        console.log('Texto crudo recibido:', text);
+        
+        const barberos = JSON.parse(text);
+        console.log('Barberos parseados:', barberos);
+
+        // Limpiamos las opciones existentes
+        selectBarberos.innerHTML = '<option value="">Seleccione un barbero...</option>';
+
+        // Agregamos cada barbero como opción
+        if (Array.isArray(barberos) && barberos.length > 0) {
+            barberos.forEach(barbero => {
+                const option = document.createElement('option');
+                option.value = barbero.id;
+                option.textContent = `${barbero.nombre} (${barbero.especialidad})`;
+                selectBarberos.appendChild(option);
+            });
+            console.log('Barberos cargados exitosamente');
+        } else {
+            selectBarberos.innerHTML = '<option value="">No hay barberos disponibles</option>';
+            console.log('No hay barberos activos');
+        }
+    } catch (error) {
+        console.error('Error al cargar barberos:', error);
+        selectBarberos.innerHTML = '<option value="">Error al cargar barberos</option>';
+    }
+}
 
 async function cargarTurnos() {
     const cuerpoTabla = document.getElementById('cuerpo-tabla');
@@ -19,6 +64,7 @@ async function cargarTurnos() {
             fila.innerHTML = `
                 <td>${turno.clienteNombre}</td>
                 <td>${turno.clienteTelefono}</td>
+                <td>${turno.nombreBarbero}</td>
                 <td>${turno.fecha}</td>
                 <td>${turno.hora}</td>
                 <td>${turno.servicio || '-'}</td>

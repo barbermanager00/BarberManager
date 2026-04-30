@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,6 +135,7 @@
                 opacity: 0;
                 transform: translateY(-30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -145,6 +147,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -170,12 +173,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <div class="logo">✂️</div>
             <h1>BARBER MANAGER</h1>
-            <p class="subtitle">Tu Sistema de Gestión de Barbería</p>
         </div>
 
         <div class="options">
@@ -215,7 +218,7 @@
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
                     const rol = this.querySelector('input[name="rol"]').value;
-                    
+
                     if (rol === 'cliente') {
                         window.location.href = '/Barber_Manager/turnos/nuevo';
                     } else if (rol === 'barbero') {
@@ -226,4 +229,5 @@
         });
     </script>
 </body>
+
 </html>
